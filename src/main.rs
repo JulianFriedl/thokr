@@ -200,6 +200,11 @@ fn start_tui<B: Backend>(
                         KeyCode::Esc => {
                             break;
                         }
+                        KeyCode::Char('w') | KeyCode::Char('\x7f') if key.modifiers.contains(KeyModifiers::CONTROL) => {
+                            if !app.thok.has_finished() {
+                                app.thok.delete_last_word();
+                            }
+                        }
                         KeyCode::Backspace => {
                             if !app.thok.has_finished() {
                                 app.thok.backspace();

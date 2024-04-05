@@ -157,6 +157,23 @@ impl Thok {
         }
     }
 
+    pub fn delete_last_word(&mut self) {
+        let mut non_space_seen = false; //track if we've started deleting a word
+        while let Some(input) = self.input.pop() {
+            self.decrement_cursor();
+            if input.char == ' ' {
+                // make sure we don't delete the space before the word
+                if non_space_seen {
+                    self.input.push(input);
+                    self.increment_cursor();
+                    break;
+                }
+            } else {
+                non_space_seen = true;
+            }
+        }
+    }
+
     pub fn start(&mut self) {
         self.started_at = Some(SystemTime::now());
     }
